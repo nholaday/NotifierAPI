@@ -1,0 +1,47 @@
+version: "3.9"
+   
+services:
+  #------Postgres------
+  db:
+    image: postgres
+    container_name: db
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    env_file:
+      - ./.env_docker-compose
+    ports:
+      - "5432:5432"
+
+  #------Django Server------
+  django-server:
+    build: .
+    image: django-server
+    container_name: django-server
+    # Use wait-for-postgres wrapper to delay command until after postgres is up
+    command: ./wait-for-postgres.sh db python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env_docker-compose
+    depends_on:
+      - db
+
+  #------Celery------
+  celery-worker:
+    image: django-server
+    container_name: celery-worker
+    command: celery -A notificationapi worker -l INFO --hostname redis
+    volumes:
+      - .:/code
+    env_file:
+      - ./.env_docker-compose
+
+  #------Redis------
+  redis:
+    image: redis
+    container_name: redis
+    command: redis-server
+    ports:
+        - "6379:6379"

@@ -1,0 +1,11 @@
+**.pyc
+.env
+.env_docker-compose
+
+# sqlite database
+db.sqlite3
+
+# Postgres database
+data/
+pgdata/
+logfile
