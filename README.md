@@ -41,6 +41,12 @@ Run the docker engine
 ```
 docker-compose up
 ```
+
+Login to the django-server container and create a superuser for django
+```
+docker exec -it django-server bash
+python manage.py createsuperuser
+```
 **That's it!**
 
 This setup method builds the docker image to run the django-server and celery worker using the Dockerfile.
