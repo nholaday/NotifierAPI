@@ -17,6 +17,8 @@ def api_root(request, format=None):
     return Response({
         'preference': reverse('preference', request=request, format=format),
         'notify': reverse('notify', request=request, format=format),
+        'OpenAPI formatted documentation': reverse('swagger-ui', request=request, format=format),
+        'ReDoc formatted documentation': reverse('redoc', request=request, format=format),
     })
 
 class UserPrefDetail(APIView):
