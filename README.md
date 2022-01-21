@@ -6,6 +6,7 @@ Features:
 * Celery asynchronous task scheduler
 * docker-compose deployment
 * Automated testing file
+* Generated OpenAPI documentation
 
 ## Requirements
 Sign up for Twilio API and SendGrid API accounts.
@@ -102,7 +103,7 @@ With the 4 services above running, navigate to http://localhost:8000
 Login with the user created in Manual setup using the button in the top right.
 Use the [Notifier API Postman Collection](https://documenter.getpostman.com/view/10758113/U16gRT8j) for testing the API
 
-Auto-generated OpenAPI 3.0 and ReDoc documentation can be found at
+Generated OpenAPI 3.0 and ReDoc documentation made with drf-spectacular can be found at
 http://{host}/schema/swagger-ui
 http://{host}/schema/ReDoc
 
@@ -217,4 +218,3 @@ Further improvements to this project beyond the scope of an MVP:
 * User registration page
 * Token authentication
 * Handle requests with no user logged in
-* Automatically generate docs using drf-spectacular
