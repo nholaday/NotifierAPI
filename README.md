@@ -98,9 +98,13 @@ python manage.py runserver
 ```
 
 # API Use Instructions
-With the 3 services above running, navigate to http://localhost:8000
+With the 4 services above running, navigate to http://localhost:8000
 Login with the user created in Manual setup using the button in the top right.
 Use the [Notifier API Postman Collection](https://documenter.getpostman.com/view/10758113/U16gRT8j) for testing the API
+
+Auto-generated OpenAPI 3.0 and ReDoc documentation can be found at
+http://{host}/schema/swagger-ui
+http://{host}/schema/ReDoc
 
 ## GET http://{host}/preference/
 Returns information from on the logged in user and the user preferences

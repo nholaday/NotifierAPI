@@ -150,5 +150,6 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Nic Holaday Notifier API',
     'DESCRIPTION': 'Django Rest Framework powered notification API',
     'VERSION': '1.0.0',
-    # OTHER SETTINGS
+    # Exclude redundant paths including json formatting option
+    'PREPROCESSING_HOOKS': ['drf_spectacular.hooks.preprocess_exclude_path_format'],
 }
