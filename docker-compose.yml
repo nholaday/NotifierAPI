@@ -8,7 +8,7 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     env_file:
-      - ./.env_docker-compose
+      - ./.env-docker-compose
     ports:
       - "5432:5432"
 
@@ -24,7 +24,7 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - ./.env_docker-compose
+      - ./.env-docker-compose
     depends_on:
       - db
 
@@ -36,7 +36,7 @@ services:
     volumes:
       - .:/code
     env_file:
-      - ./.env_docker-compose
+      - ./.env-docker-compose
 
   #------Redis------
   redis:

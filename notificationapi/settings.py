@@ -30,7 +30,7 @@ TWILIO_AUTH = os.environ.get('TWILIO_AUTH')
 TWILIO_MESSAGING_SERVICE_SID = os.environ.get('TWILIO_MESSAGING_SERVICE_SID')
 SENDGRID_FROM_EMAIL = os.environ.get('SENDGRID_FROM_EMAIL')
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'uql27&gqjeh1gt!(ek-o$0bw#v#w-or+a2(som%e*%to7kja7-')
 
 # Application definition
 
@@ -136,7 +136,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery Configuration Options
-CELERY_BROKER_URL = 'redis://' + os.getenv('REDIS_CELERY_HOST', 'localhost') + ':6379/0'
+CELERY_BROKER_URL = 'redis://' + os.getenv('CELERY_REDIS_HOST', 'localhost') + ':6379/0'
 CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'

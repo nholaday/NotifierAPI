@@ -1,26 +1,51 @@
 # Notifier API
-This is a django REST framework powered API to send notifications to users using the Twilio and SendGrid APIs.  After logging in using Django's built in user authentication system, users can update their preferences to email, sms, or none, and send notifications at a time of their choosing.
+This is a Django REST Framework powered API to send notifications to users using the Twilio and SendGrid APIs.  After logging in using Django's built in user authentication system, users can update their preferences to email, sms, or none, and send notifications at a time of their choosing.
+
+Features:
+* Postgres database
+* Celery asynchronous task scheduler
+* docker-compose deployment
+* Automated testing file
 
 ## Requirements
-Sign up for Twilio API and SendGrid API.
+Sign up for Twilio API and SendGrid API accounts.
 
 ## Environment
-There are 3 services that need to run:
+There are 4 services that need to run:
 * django REST API server
 * celery worker - send scheduled messages asynchronously
 * redis - message broker for celery
-For either of the setup methods below you will need to define your environment variables:
-Create a `.env` file with the following info from your Sendgrid and Twilio accounts:
+* postgres - database storing user preferences
+
+For either of the setup methods below you will need to define your environment variables by creating a `.env-docker-compose` or `.env` file with the info from your Sendgrid and Twilio accounts, more directions in Local Deployment Setup section.
 ```
-export SENDGRID_FROM_EMAIL=''
-export SENDGRID_API_KEY=''
-export TWILIO_ACCOUNT_SID=''
-export TWILIO_AUTH=''
-export TWILIO_MESSAGING_SERVICE_SID=''
-export DJANGO_SECRET_KEY=''
+SENDGRID_FROM_EMAIL=''
+SENDGRID_API_KEY=''
+TWILIO_ACCOUNT_SID=''
+TWILIO_AUTH=''
+TWILIO_MESSAGING_SERVICE_SID=''
+...
 ```
 
-### Setup
+### Local Deployment Setup
+## Option 1 - Docker-compose (recommended)
+Create a `.env-docker-compose` file by copying the example file and filling in your details
+```
+$ cp env-docker-compose_example .env-docker-compose
+$ vi .env-docker-compose # or whatever editor you prefer
+```
+
+Install the docker engine (https://docs.docker.com/engine/install/)
+Run the docker engine
+```
+docker-compose up
+```
+**That's it!**
+
+This setup method builds the docker image to run the django-server and celery worker using the Dockerfile.
+Then it uses the docker-compose.yml file as instructions for deployment for 4 containers, one for each services listed above.
+
+## Option 2 - Manually run processes in terminal windows
 This setup runs all 4 processes in different terminal windows using a venv.  
 
 Create a virtualenv and install the necessary packages:
@@ -29,7 +54,15 @@ $ virtualenv -p 3.7 venv
 $ pip install -r requirements.txt
 ```
 
+Create a `.env` file by copying the example file and filling in your details
+```
+$ cp env_example .env
+$ vi .env # or whatever editor you prefer
+```
 Then source the `.env` file to load the variables into your environment as shown in steps 1 and 3.  These are loaded into the application in `settings.py`
+```
+$ source .env
+```
 
 1. Run a redis server with the default settings
 ```
@@ -43,13 +76,6 @@ source .env
 celery -A notificationapi worker -l INFO
 ```
 3. Run the PostgreSQL database
-**Option 1 - docker-compose:**
-Install the docker daemon (e.g. Docker for Mac)
-Run the docker daemon
-```
-docker-compose up
-```
-**Option 2 - Manually:**
 ```
 brew install postgres
 pg_ctl -D pgdata init
@@ -61,7 +87,6 @@ CREATE DATABASE notifier;
 GRANT ALL PRIVILEGES ON DATABASE notifier TO notifier;
 \q
 ```
-
 4. Create a user and Run the django webserver
 ```
 cd notificationapi
@@ -185,8 +210,6 @@ Further improvements to this project beyond the scope of an MVP:
 * More comprehensive testing as listed above
 * Include phone number validation using Twilio Lookup API
 * Improved logging 
-* docker-compose environment setup
-* Switch to a more scalable database choice
 * User registration page
 * Token authentication
 * Handle requests with no user logged in

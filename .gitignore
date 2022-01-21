@@ -1,6 +1,6 @@
 **.pyc
 .env
-.env_docker-compose
+.env-docker-compose
 
 # sqlite database
 db.sqlite3
