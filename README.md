@@ -36,15 +36,19 @@ $ cp env-docker-compose_example .env-docker-compose
 $ vi .env-docker-compose # or whatever editor you prefer
 ```
 
-Install the docker engine (https://docs.docker.com/engine/install/)
+Install the docker engine and docker-compose (https://docs.docker.com/engine/install/)
+
 Run the docker engine
+
+Run all 4 containers with docker-compose command:
 ```
 docker-compose up
 ```
 
-Login to the django-server container and create a superuser for django
+Login to the django-server container, migrate database and create a superuser for django
 ```
 docker exec -it django-server bash
+python manage.py migrate
 python manage.py createsuperuser
 ```
 **That's it!**
