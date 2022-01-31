@@ -117,7 +117,7 @@ Generated OpenAPI 3.0 and ReDoc documentation made with drf-spectacular can be f
 http://{host}/schema/swagger-ui
 http://{host}/schema/ReDoc
 
-## GET http://{host}/preference/
+## GET http://{host}/preference
 Returns information from on the logged in user and the user preferences
 
 **Response:**
@@ -128,9 +128,11 @@ Returns information from on the logged in user and the user preferences
 Example:
 ```
 curl -u user:password --location --request POST 'http://localhost:8000/preference/'
+# OR with httpie installed:
+http -a user:password localhost:8000/preference.json
 ```
 
-## POST http://{host}/preference/
+## POST http://{host}/preference
 Changes the user's notification preferences in the database. 
 Not including notify_pref will leave it unchanged.
 Email and sms fields are not required so users can omit their email address if their preference is sms and vice versa.
@@ -157,6 +159,9 @@ curl -u user:password --location --request POST 'http://localhost:8000/preferenc
     "email": "guy@example.com",
     "phone": 15105552054
 }'
+# OR with httpie installed:
+http -a user:password localhost:8000/preference.json notify_pref=sms email=guy@example.com phone=15105552054
+# the ".json" extension is needed to specify a json response.  
 ```
 Example Response:
 ```
@@ -168,10 +173,10 @@ Example Response:
 }
 ```
 
-## GET http://{host}/notify/
+## GET http://{host}/notify
 Returns the same information as GET `/preference/` endpoint for convenience to review user preferences.
 
-## POST http://{host}/notify/
+## POST http://{host}/notify
 *Note:* To send SMS notifications using the Twilio trial account, the destination phone number must first be validated through the Twilio site.
 Sends a notification using the user's preference at the the time specified.
 
@@ -199,6 +204,11 @@ curl -u user:password --location --request POST 'http://localhost:8000/notify/' 
     "text": "Body text example",
     "sendtime": "2021-09-06T15:52:10-07:00"
 }'
+# OR with httpie installed:
+http -a user:password POST localhost:8000/notify.json \
+    title="Subject text example httpie" \
+    text="Body text example httpie" \
+    sendtime: "2021-09-06T15:52:10-07:00"
 ```
 Example Response:
 ```
